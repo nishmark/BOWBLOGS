@@ -1,0 +1,63 @@
+datasource db {
+  provider     = "mysql"
+  url          = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+
+
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  // VIRTUAL FIELD: This doesn't create a column in User table
+  // It tells Prisma "this user can have multiple blogs"
+  // Prisma uses this to enable queries like user.blogs
+  // This is the "One" side of "One-to-Many" relationship
+  blogs     Blog[]
+}
+
+model Blog {
+  id        String   @id @default(cuid())
+  title     String
+  body      String   @db.Text
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+                    // Editable fields
+  isPublished Boolean  @default(false)
+
+  
+  // PHYSICAL COLUMN: This actually stores the User's ID in the Blog table
+  // This is the "foreign key" that creates the link
+  // Every blog MUST have an authorId (required field)
+  //author id come from session?.user?.id
+  //author id is the id of the user who is writing the blog
+  //author id is the id of the user who is writing the blog
+  authorId  String  
+  
+  // VIRTUAL FIELD: This doesn't create a column in Blog table
+  // It tells Prisma "this blog belongs to one user"
+  // @relation defines HOW the link works:
+  // - fields: [authorId] = "use authorId column from THIS table"
+  // - references: [id] = "match it with id column from User table"
+  // - onDelete: Cascade = "if user is deleted, delete all their blogs too"
+  // This enables queries like blog.author
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  
+  // DATABASE INDEX: Makes queries faster when searching by authorId
+  // Required by PlanetScale for foreign key relationships
+  // Speeds up queries like "find all blogs by this author"
+  @@index([authorId])
+}
