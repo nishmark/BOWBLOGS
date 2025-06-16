@@ -6,7 +6,7 @@ import SavedDraftsBlogs from '../components/DashboardComponents/SavedDraftsBlogs
 import UserProfile from '../components/DashboardComponents/UserProfile'
 import Writeblog from '../components/Writeblog'
 
-function page() {
+function Page() {
   const [activeTab, setActiveTab] = useState(0); // Default to My Published Blogs
 
   const handleTabChange = (tabIndex) => { // not exicuted first time
@@ -41,4 +41,4 @@ function page() {
   )
 }
 
-export default page
+export default Page

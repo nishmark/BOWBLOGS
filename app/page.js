@@ -3,7 +3,7 @@ import BlogCard from './components/BlogCard'
 import Dropdown from './components/Dropdown'
 import BlogsList from './components/BlogsList'
 
-function page() {
+function Page() {
   return (
     <div>
       <div className='mt-2 ml-20 mr-20 flex justify-end'>
@@ -17,4 +17,4 @@ function page() {
   )
 }
 
-export default page
+export default Page
