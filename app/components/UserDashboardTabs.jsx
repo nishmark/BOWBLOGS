@@ -13,7 +13,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function UserDashboardTabs({ activeTab, onTabChange }) {
+export default function UserDashboardTabs({ onTabChange }) {
   const [activeTabIndex, setActiveTabIndex] = useState(0); // Default to My Published Blogs
 
   const handleTabClick = (index) => {

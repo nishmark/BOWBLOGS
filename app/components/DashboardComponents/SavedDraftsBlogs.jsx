@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { BookOpenIcon, PencilIcon, TrashIcon, EyeIcon } from "@heroicons/react/20/solid";
 import Image from "next/image";
+import DashbordBlogCard from './DashbordBlogCard';
 
 function SavedDraftsBlogs() {
   const { data: session, status } = useSession();
@@ -19,7 +20,7 @@ function SavedDraftsBlogs() {
   });
 
   // Fallback function to get user ID by email
-  async function getUserById(email) {
+  async function getUserIdByEmail(email) {
     try {
       const response = await fetch(`/api/users?email=${encodeURIComponent(email)}`);
       if (response.ok) {
@@ -41,7 +42,7 @@ function SavedDraftsBlogs() {
       setLoading(true);
       
       // Get user ID by email
-      const userId = await getUserById(session.user.email);
+      const userId = await getUserIdByEmail(session.user.email);
       if (!userId) {
         console.error('Could not find user ID');
         return;
@@ -83,16 +84,9 @@ function SavedDraftsBlogs() {
     }
   };
 
-  // Handle preview draft
-  const handlePreviewDraft = (draftId) => {
-    // TODO: Implement preview functionality
-    console.log('Preview draft:', draftId);
-  };
-
   // Handle edit draft
   const handleEditDraft = (draftId) => {
-    // TODO: Implement edit functionality
-    console.log('Edit draft:', draftId);
+    router.push(`/editpage/${draftId}`);
   };
 
   // Handle delete draft
@@ -149,6 +143,11 @@ function SavedDraftsBlogs() {
     }
   };
 
+  const handleReadDraft = (e, draftId) => {
+    e.preventDefault();
+    router.push(`/readblogpage/${draftId}`);
+  };
+
   if (status === 'loading') {
     return (
       <div className="flex justify-center items-center w-full py-12">
@@ -184,65 +183,22 @@ function SavedDraftsBlogs() {
         <>
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {drafts.map((draft) => (
-              <div
-                key={draft.id}
-                className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200"
-              >
-                <div className="p-6">
-                  <div className="flex justify-center mb-4">
-                    <Image
-                      alt={draft.title}
-                      src={draft.image || 'https://via.placeholder.com/400x400/cccccc/666666?text=Draft+Image'}
-                      width={200}
-                      height={200}
-                      className="w-full h-48 object-cover rounded-lg"
-                      onError={(e) => {
-                        e.target.src = 'https://via.placeholder.com/400x400/cccccc/666666?text=Draft+Image';
-                      }}
-                    />
-                  </div>
-                  
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2 line-clamp-2">
-                    {draft.title}
-                  </h3>
-                  
-                  <div className="text-sm text-gray-500 mb-4">
-                    Last updated: {new Date(draft.updatedAt).toLocaleDateString()}
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    <button
-                      onClick={() => handlePreviewDraft(draft.id)}
-                      className="flex items-center space-x-1 text-blue-600 hover:text-blue-800 text-sm font-medium"
-                    >
-                      <EyeIcon className="w-4 h-4" />
-                      <span>Preview</span>
-                    </button>
-                    
-                    <button
-                      onClick={() => handleEditDraft(draft.id)}
-                      className="flex items-center space-x-1 text-green-600 hover:text-green-800 text-sm font-medium"
-                    >
-                      <PencilIcon className="w-4 h-4" />
-                      <span>Edit</span>
-                    </button>
-                    
-                    <button
-                      onClick={() => handlePublishDraft(draft.id)}
-                      className="flex items-center space-x-1 text-purple-600 hover:text-purple-800 text-sm font-medium"
-                    >
-                      <BookOpenIcon className="w-4 h-4" />
-                      <span>Publish</span>
-                    </button>
-                    
-                    <button
-                      onClick={() => handleDeleteDraft(draft.id)}
-                      className="flex items-center space-x-1 text-red-600 hover:text-red-800 text-sm font-medium"
-                    >
-                      <TrashIcon className="w-4 h-4" />
-                      <span>Delete</span>
-                    </button>
-                  </div>
+              <div key={draft.id}>
+                <DashbordBlogCard
+                  blog={draft}
+                  onRead={(e) => handleReadDraft(e, draft.id)}
+                  onEdit={() => handleEditDraft(draft.id)}
+                  onDelete={() => handleDeleteDraft(draft.id)}
+                  dateLabel="Updated on"
+                />
+                <div className="flex justify-center mt-2">
+                  <button
+                    onClick={() => handlePublishDraft(draft.id)}
+                    className="flex items-center space-x-1 text-purple-600 hover:text-purple-800 text-sm font-medium border border-purple-200 rounded px-3 py-1"
+                  >
+                    <BookOpenIcon className="w-4 h-4" />
+                    <span>Publish</span>
+                  </button>
                 </div>
               </div>
             ))}

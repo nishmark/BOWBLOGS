@@ -1,3 +1,16 @@
+/*
+unable to get userd id directly from the database
+with session.user.email we can get the user id
+but we need to get the user id from the database
+
+session?.user?.id not working
+
+when j
+
+
+*/
+
+
 'use client'
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 import { ChevronDownIcon } from '@heroicons/react/16/solid' 
@@ -10,6 +23,7 @@ export default function Writeblog() {
   const DEFAULT_IMAGE = "https://www.purina.in/sites/default/files/2020-11/Toy%20Dogs%20Everything%20You%20Need%20to%20KnowHERO.jpg";
 
   const { data: session } = useSession();
+  const router = useRouter();
 
   const [showImageInput, setShowImageInput] = useState(false);
   const [justwrittenblog, setJustWrittenBlog] = useState({
@@ -27,7 +41,7 @@ export default function Writeblog() {
   // Fallback function to get user ID by email
   async function getUserById(email) {
     try {
-      const response = await fetch(`/api/users?email=${encodeURIComponent(email)}`);
+      const response = await fetch(`/api/users?email=${encodeURIComponent(email)}`); // api/users.js
       if (response.ok) {
         const userData = await response.json();
         return userData.id;
@@ -100,12 +114,12 @@ export default function Writeblog() {
     console.log("sendBlogToServer", newBlogData);
     
     try {
-      // Show loading state (optional)
+      // Show loading state 
       const saveBtn = document.getElementById('saveBtn');
       const publishBtn = document.getElementById('publishBtn');
       
-      if (saveBtn) saveBtn.disabled = true;
-      if (publishBtn) publishBtn.disabled = true;
+      if (saveBtn) saveBtn.disabled = true;  //disable the save btn
+      if (publishBtn) publishBtn.disabled = true; //disable the publish button
       
       // Send POST request to your API
       const response = await fetch('/api/blogs', {
@@ -128,12 +142,17 @@ export default function Writeblog() {
           alert('Blog saved as draft successfully! 📝');
         }
         
-        // Optional: Clear the form after successful save
+        // Clear the form after successful save
         clearButtonPressed();
+
+        //http://localhost:3000/userdashboard -------USER DASHBOARD
+      //  router.push('/userdashboard');
         
-        // Optional: Redirect to blog list or blog detail page
+        // Redirect to blog list or blog detail page
         // router.push('/blogs');
-        // router.push(`/blogs/${result.id}`);
+         //router.push(`/blogs/${result.id}`);
+         //http://localhost:3000/readblogpage/1
+         router.push(`/readblogpage/${result.id}`);
         
       } else {
         // Error from server
@@ -150,8 +169,8 @@ export default function Writeblog() {
       const saveBtn = document.getElementById('saveBtn');
       const publishBtn = document.getElementById('publishBtn');
       
-      if (saveBtn) saveBtn.disabled = false;
-      if (publishBtn) publishBtn.disabled = false;
+      if (saveBtn) saveBtn.disabled = false; //enable the save btn
+      if (publishBtn) publishBtn.disabled = false; //enable the publish btn
     }
   }
 
@@ -328,3 +347,12 @@ export default function Writeblog() {
     </form>
   )
 }
+
+
+/***********program flow*************************
+ * 
+ * 
+ * 
+ * 
+ * 
+ *  */

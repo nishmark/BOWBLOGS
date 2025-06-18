@@ -8,11 +8,11 @@ function BlogsList() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [pagination, setPagination] = useState({
-    currentPage: 1,
-    totalPages: 1,
-    totalBlogs: 0,
-    hasMore: false,
-    limit: 10
+    currentPage: 1, // Which page you're currently on
+    totalPages: 1, // Total number of pages available
+    totalBlogs: 0, // Total number of blogs in the database
+    hasMore: false, // Whether there are more blogs to load
+    limit: 10 // Number of blogs to load per page
   });
 
   // Fetch blogs from API
@@ -25,16 +25,18 @@ function BlogsList() {
         sortOrder: sortOrder
       });
       
-      const response = await fetch(`/api/blogs?${params}`);
+      const response = await fetch(`/api/blogs?${params}`); //send page number to say which blogs to skip and load
       const data = await response.json();
       
-      if (page === 1) {
+      if (page === 1) {  // If page === 1: Replaces all blogs (for sorting changes)
         setBlogs(data.blogs);
-      } else {
+      } else {  //If page > 1: Appends new blogs to existing ones (for "Load More")
         setBlogs(prev => [...prev, ...data.blogs]);
       }
+
+     
       
-      setPagination(data.pagination);
+      setPagination(data.pagination); //set the pagination data to the state
     } catch (error) {
       console.error('Error fetching blogs:', error);
     } finally {

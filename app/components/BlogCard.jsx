@@ -12,7 +12,7 @@ export default function BlogCard({ blogs }) {
     router.push(`/readblogpage/${blogId}`);
   };
 
-  if (!blogs || blogs.length === 0) {
+  if (!blogs || blogs.length === 0) { // if no blogs are found
     return (
       <div className="flex justify-center items-center w-full py-12">
         <div className="text-lg text-gray-500">No blogs found</div>

@@ -9,11 +9,11 @@ import Writeblog from '../components/Writeblog'
 function Page() {
   const [activeTab, setActiveTab] = useState(0); // Default to My Published Blogs
 
-  const handleTabChange = (tabIndex) => { // not exicuted first time
+  function handleTabChange(tabIndex) { // not exicuted first time
     setActiveTab(tabIndex);
-  };
+  }
 
-  const renderTabContent = () => {  // not exicuted first time
+  const renderTabContent = () => {  
     switch (activeTab) {
       case 0: // My Published Blogs
         return <MyPublishedBlogs />;
@@ -31,7 +31,7 @@ function Page() {
   return (
     <div className='flex-col ml-20 mr-20 justify-center min-h-screen'>
       <div className="mb-8"> 
-        <UserDashboardTabs activeTab={activeTab} onTabChange={handleTabChange} /> 
+        <UserDashboardTabs onTabChange={handleTabChange} /> 
       </div>
       
       <div className='flex justify-center p-8 min-h-32'>

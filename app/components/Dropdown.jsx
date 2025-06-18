@@ -43,12 +43,16 @@ export default function Dropdown() {
   };
 
   const handleSort = (sortBy, sortOrder) => {
-    const params = new URLSearchParams(searchParams);
+    const params = new URLSearchParams(searchParams); //
     params.set('sortBy', sortBy);
     params.set('sortOrder', sortOrder);
     
     // Update the URL with new parameters
-    router.push(`?${params.toString()}`);
+    //The router.push() uses Next.js client-side navigation, which:
+    //Updates the URL in the browser
+    //Does NOT reload the page
+    //Triggers a re-render of components that depend on URL parameters
+    router.push(`?${params.toString()}`); //
     
     // Update the current sort text immediately
     const sortText = getSortText(sortBy, sortOrder);

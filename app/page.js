@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react'
-import BlogCard from './components/BlogCard'
 import Dropdown from './components/Dropdown'
 import BlogsList from './components/BlogsList'
+
 
 function Page() {
   return (
