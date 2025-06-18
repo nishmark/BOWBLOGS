@@ -35,8 +35,9 @@ export default function BlogCard({ blogs }) {
               <Image
                 alt={blog.title}
                 src={blog.image || 'https://via.placeholder.com/400x400/cccccc/666666?text=Blog+Image'}
-                width={128}
-                height={128}
+                width={500}
+                height={500}
+                quality={100}
                 className="mx-auto size-48 shrink-0  object-cover"
                 onError={(e) => {
                   e.target.src = 'https://via.placeholder.com/400x400/cccccc/666666?text=Blog+Image';
