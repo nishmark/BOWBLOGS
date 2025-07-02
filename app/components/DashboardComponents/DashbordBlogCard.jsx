@@ -4,7 +4,7 @@ import Image from "next/image";
 
 function DashbordBlogCard({ blog, onRead, onEdit, onDelete, dateLabel = 'Published on' }) {
   return (
-    <div className="bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200">
+    <div className="max-w-[400px] rounded-lg shadow-sm hover:shadow-md transition-shadow border border-gray-200" >
       <div className="p-6">
         <div className="flex justify-center mb-4">
           <Image
@@ -12,7 +12,7 @@ function DashbordBlogCard({ blog, onRead, onEdit, onDelete, dateLabel = 'Publish
             src={blog.image || 'https://via.placeholder.com/400x400/cccccc/666666?text=Blog+Image'}
             width={200}
             height={200}
-            className="w-full h-48 object-cover rounded-lg"
+            className="mx-auto size-48 shrink-0  object-cover"
             onError={(e) => {
               e.target.src = 'https://via.placeholder.com/400x400/cccccc/666666?text=Blog+Image';
             }}

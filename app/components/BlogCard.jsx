@@ -12,7 +12,8 @@ export default function BlogCard({ blogs }) {
     router.push(`/readblogpage/${blogId}`);
   };
 
-  if (!blogs || blogs.length === 0) { // if no blogs are found
+  if (!blogs || blogs.length === 0) {
+    // if no blogs are found
     return (
       <div className="flex justify-center items-center w-full py-12">
         <div className="text-lg text-gray-500">No blogs found</div>
@@ -31,16 +32,20 @@ export default function BlogCard({ blogs }) {
             key={blog.id}
             className="col-span-1 flex flex-col divide-y divide-gray-200 rounded-lg bg-white text-center shadow-sm hover:shadow-md transition-shadow"
           >
-            <div className="flex flex-1 flex-col p-8">
+            <div className="flex flex-1 flex-col p-8 bg-white">
               <Image
                 alt={blog.title}
-                src={blog.image || 'https://via.placeholder.com/400x400/cccccc/666666?text=Blog+Image'}
+                src={
+                  blog.image ||
+                  "https://via.placeholder.com/400x400/cccccc/666666?text=Blog+Image"
+                }
                 width={500}
                 height={500}
                 quality={100}
                 className="mx-auto size-48 shrink-0  object-cover"
                 onError={(e) => {
-                  e.target.src = 'https://via.placeholder.com/400x400/cccccc/666666?text=Blog+Image';
+                  e.target.src =
+                    "https://via.placeholder.com/400x400/cccccc/666666?text=Blog+Image";
                 }}
               />
               <h3 className="mt-6 text-sm font-medium text-gray-900 line-clamp-2">
@@ -50,7 +55,7 @@ export default function BlogCard({ blogs }) {
                 <dt className="sr-only">Author</dt>
                 <dd className="mt-3">
                   <span className="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-green-600/20 ring-inset">
-                    {blog.author?.name || 'Unknown Author'}
+                    {blog.author?.name || "Unknown Author"}
                   </span>
                 </dd>
                 <dd className="mt-2 text-xs text-gray-500">
@@ -61,9 +66,7 @@ export default function BlogCard({ blogs }) {
             <div>
               <div className="-mt-px flex divide-x divide-gray-200">
                 <div className="flex w-0 flex-1">
-                  <button
-                    className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 hover:bg-gray-50"
-                  >
+                  <button className="relative -mr-px inline-flex w-0 flex-1 items-center justify-center gap-x-3 rounded-bl-lg border border-transparent py-4 text-sm font-semibold text-gray-900 hover:bg-gray-50">
                     <HeartIcon
                       aria-hidden="true"
                       className="size-5 text-gray-400"

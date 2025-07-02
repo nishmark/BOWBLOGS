@@ -1,4 +1,3 @@
-
 import "./globals.css";
 import Header from "./components/Header";
 import SessionProvider from "./components/AuthComponents/SessionProviderWraper";
@@ -11,10 +10,17 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body> 
+      <head>
+        {/* TourCraft Script - Add this */}
+        <script
+          src="https://bowblogs.vercel.app/tour.js?key=dev-api-key"
+          async
+        ></script>
+      </head>
+      <body>
         <SessionProvider>
-        <Header/>
-        {children}
+          <Header />
+          {children}
         </SessionProvider>
       </body>
     </html>
