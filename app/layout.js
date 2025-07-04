@@ -1,6 +1,7 @@
 import "./globals.css";
 import Header from "./components/Header";
 import SessionProvider from "./components/AuthComponents/SessionProviderWraper";
+import Script from "next/script";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,18 +11,16 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <head>
-        {/* TourCraft Script - Add this */}
-        <script
-          src="https://bowblogs.vercel.app/tour.js?key=dev-api-key"
-          async
-        ></script>
-      </head>
       <body>
         <SessionProvider>
           <Header />
           {children}
         </SessionProvider>
+        {/* TourCraft Script - Correct way in Next.js */}
+        <Script
+          src="https://tour-craft-v2-6u9h.vercel.app/tours.js"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );
